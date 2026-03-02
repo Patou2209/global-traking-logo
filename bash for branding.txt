@@ -1,0 +1,34 @@
+set -e
+
+TRACCAR_URL="http://127.0.0.1:8082"
+TRACCAR_USER="patoukaziama@gmail.com"
+TRACCAR_PASS="patou2209"
+
+LOGO_URL="https://patou2209.github.io/global-traking-logo/congo_tracking.png"
+
+echo "==> 1) Update server attributes (title + logo + logoInverted + disable doc)..."
+
+curl -s -u "${TRACCAR_USER}:${TRACCAR_PASS}" \
+  -H "Content-Type: application/json" \
+  -X PUT "${TRACCAR_URL}/api/server" \
+  -d @- <<JSON
+{
+  "id": 1,
+  "attributes": {
+    "timezone": "Africa/Kinshasa",
+    "title": "CONGO TRACKING",
+    "logo": "${LOGO_URL}",
+    "logoInverted": "${LOGO_URL}",
+    "ui.disableDocumentation": true
+  },
+  "registration": false,
+  "forceSettings": true
+}
+JSON
+
+echo
+echo "==> 2) Lire la config serveur pour vérifier..."
+curl -s -u "${TRACCAR_USER}:${TRACCAR_PASS}" "${TRACCAR_URL}/api/server" | head -c 2000
+echo
+echo
+echo "✅ Done. Ouvre l’UI puis fais CTRL+F5 (ou navigation privée)."

@@ -1,0 +1,39 @@
+// commandes
+
+|| allumer le vpn:
+
+ssh root@157.245.181.252  sur powershel
+
+|| allumer le services
+cd /opt/tk905-platform
+docker compose up -d
+docker compose ps
+
+|| verifier les logs traccar
+docker logs -n 80 traccar
+
+
+|| test reseau port 5023 ok sur vpn:
+ss -ltnp | grep :5023 || true
+
+|| test reseau sur powershel:
+Test-NetConnection 157.245.181.252 -Port 5023
+
+
+
+|| diagnostic server si le ws tombe
+pm2 status
+ss -ltnp | grep :8080 || true
+curl -sS http://127.0.0.1:8080/health
+
+une fois congotraking acheter, pour utiliser le sous domaine:
+
+<a href="https://app.congotraking.com" class="login-btn">
+    Accéder au Dashboard
+</a>
+
+pour ouvrir une blank page:
+<a href="https://app.congotraking.com" target="_blank" rel="noopener">
+    Accéder au Dashboard
+</a>
+
